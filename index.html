@@ -105,7 +105,9 @@
 				zoom: 16,
 				center: {lat:37.5004307,lng:127.0335385} // 회사 위치
 			});
+
 			var legend = document.getElementById('legend');
+			
 			for (var key in icons) {
 				var name = key;
 				var icon = icons[key].icon;
@@ -115,6 +117,8 @@
 			}
 
 			map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+
+			var infoWindow = null;
 
 			$.get('https://spreadsheets.google.com/feeds/list/1wubbvjFE_8LqoKFN_7WstUdMfNtJowHpVlY69IepUTw/od6/public/values?alt=json', function(data){
 				var entries = data.feed.entry;
@@ -158,46 +162,59 @@
 
 					place.contentString = contentString;
 
-					place.infowindow = new google.maps.InfoWindow({
+					place.infoWindow = new google.maps.InfoWindow({
 						content: place.contentString
 					});
 
 					place.marker = new google.maps.Marker({
 						position: position,
 						map: map,
-						title: place.name,
+						title: place.type + ':' + place.name,
+						type: place.type,
 						icon: icons[place.type].icon
 					});
 
-					place.marker.addListener('click', function() {
-						place.infowindow.open(map, place.marker);
+					place.marker.addListener('click', function(e) {
+						if (infoWindow){ infoWindow.close(); }
+
+						var place = places[this.title.split(':')[0]][this.title.split(':')[1]];
+						infoWindow = place.infoWindow;
+						infoWindow.open(map, place.marker);
 
 						DISQUS.reset({
 							reload: true,
 							config: function () {  
 								this.page.identifier = place.name;  
-								this.page.url = 'https://alex-toss.github.io/tosshelin-guide#!' + place.name;  // Replace PAGE_URL with your page's canonical URL variable
+								this.page.url = 'https://alex-toss.github.io/tosshelin-guide#!' + place.name;
 							}
 						});
 					});
 
 					places[place.type][place.name] = place;
-					$('#'+icons[place.type].name+'Dropdown div').append(
-						'<a class="dropdown-item" href="#">' +
+
+					var anchor = $(
+						'<a class="dropdown-item" href="#!' + place.name + '">' +
 							'<img style="width:12px;" class="mr-1" src="' + icons[place.type].icon + '">' +
 							'<small>' + place.name + '</small>' + 
 						'</a>'
-					).on('click', function(e){
-						place.infowindow.open(map, place.marker);
-						
+					).data('type', place.type).data('name', place.name)
+					.on('click', function(e){
+						if (infoWindow){ infoWindow.close(); }
+
+						var place = places[$(this).data('type')][$(this).data('name')];
+						infoWindow = place.infoWindow;
+						place.infoWindow.open(map, place.marker);
+
 						DISQUS.reset({
 							reload: true,
 							config: function () {  
 								this.page.identifier = place.name;  
-								this.page.url = 'https://alex-toss.github.io/tosshelin-guide#!' + place.name;  // Replace PAGE_URL with your page's canonical URL variable
+								this.page.url = 'https://alex-toss.github.io/tosshelin-guide#!' + place.name;
 							}
 						});
 					});
+					
+					$('#'+icons[place.type].name+'Dropdown div').append(anchor);
 				}
 			});
 		}
