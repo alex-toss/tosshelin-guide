@@ -27,31 +27,31 @@
 			<span class="navbar-brand"><i><strong>TOSS</strong>helin Guide</i> - 토슐랭 가이드 맛집 지도</span>
 			<ul class="navbar-nav mr-auto mt-2 mt-lg-0 ml-3">
 				<li class="nav-item dropdown" id="koreanDropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">한식</a>
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">한식<span></span></a>
 					<div class="dropdown-menu" aria-labelledby="koreanDropdown"></div>
 				</li>
 				<li class="nav-item dropdown" id="chineseDropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">중식</a>
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">중식<span></span></a>
 					<div class="dropdown-menu" aria-labelledby="chineseDropdown"></div>
 				</li>
 				<li class="nav-item dropdown" id="japaneseDropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">일식</a>
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">일식<span></span></a>
 					<div class="dropdown-menu" aria-labelledby="japaneseDropdown"></div>
 				</li>
 				<li class="nav-item dropdown" id="westernDropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">양식</a>
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">양식<span></span></a>
 					<div class="dropdown-menu" aria-labelledby="westernDropdown"></div>
 				</li>
 				<li class="nav-item dropdown" id="snackDropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">분식</a>
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">분식<span></span></a>
 					<div class="dropdown-menu" aria-labelledby="snackDropdown"></div>
 				</li>
 				<li class="nav-item dropdown" id="fusionDropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">퓨전</a>
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">퓨전<span></span></a>
 					<div class="dropdown-menu" aria-labelledby="fusionDropdown"></div>
 				</li>
 				<li class="nav-item dropdown" id="cafeDropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">카페/디저트</a>
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">카페/디저트<span></span></a>
 					<div class="dropdown-menu" aria-labelledby="cafeDropdown"></div>
 				</li>
 			</ul>
@@ -216,6 +216,10 @@
 					});
 					
 					$('#'+icons[place.type].name+'Dropdown div').append(anchor);
+				}
+
+				for(var key in places){
+					$('#'+icons[key].name+'Dropdown a span').text('('+Object.keys(places[key]).length+')');
 				}
 			});
 		}
