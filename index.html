@@ -3,7 +3,7 @@
 <head>
 	<style>
 	#map {
-		height: 70vh;
+		height: 65vh;
 		width: 100vw;
 	}
 	#legend {
@@ -41,6 +41,10 @@
 				<li class="nav-item dropdown" id="westernDropdown">
 					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">양식<span></span></a>
 					<div class="dropdown-menu" aria-labelledby="westernDropdown"></div>
+				</li>
+				<li class="nav-item dropdown" id="asianDropdown">
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">아시안<span></span></a>
+					<div class="dropdown-menu" aria-labelledby="asianDropdown"></div>
 				</li>
 				<li class="nav-item dropdown" id="snackDropdown">
 					<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">분식<span></span></a>
@@ -83,8 +87,9 @@
 		var icons = {
 			'한식': { name: 'korean', icon: iconBase + 'yellow-dot.png' },
 			'중식': { name: 'chinese', icon: iconBase + 'red-dot.png' },
-			'일식': { name: 'jaanese', icon: iconBase + 'orange-dot.png' },
+			'일식': { name: 'japanese', icon: iconBase + 'orange-dot.png' },
 			'양식': { name: 'western', icon: iconBase + 'purple-dot.png' },
+			'아시안': { name: 'asian', icon: iconBase + 'ltblue-dot.png' },
 			'분식': { name: 'snack', icon: iconBase + 'green-dot.png' },
 			'퓨전': { name: 'fusion', icon: iconBase + 'pink-dot.png' },
 			'카페/디저트': { name: 'cafe', icon: iconBase + 'blue-dot.png' },
@@ -95,6 +100,7 @@
 			'중식': {},
 			'일식': {},
 			'양식': {},
+			'아시안': {},
 			'분식': {},
 			'퓨전': {},
 			'카페/디저트': {}
@@ -136,6 +142,7 @@
 					place.image		= entry['gsx$대표사진'] 	? entry['gsx$대표사진']['$t']	 	: '';
 					place.writer	= entry['gsx$이메일주소'] 	? entry['gsx$이메일주소']['$t'] 	: '';
 					place.created 	= entry['gsx$타임스탬프'] 	? entry['gsx$타임스탬프']['$t'] 	: '';
+					place.edit 		= entry['gsx$수정']	 	? entry['gsx$수정']['$t']		 	: '';
 
 					place.lat 		= entry['gsx$latitude'] ? parseFloat(entry['gsx$latitude']['$t']) : '';
 					place.lng 		= entry['gsx$longitude']? parseFloat(entry['gsx$longitude']['$t']): '';
@@ -145,7 +152,8 @@
 					var position = {lat: place.lat, lng: place.lng};
 
 					var contentString  = '<div class="card" style="width:20rem; border:none;">';
-						contentString += 	'<h5 class="card-title mt-2 mb-3 ml-1"><span class="badge badge-secondary">' + place.type + '</span> ' + place.name + '</h5>';
+						contentString += 	'<h5 class="card-title mt-2 mb-0 ml-1"><span class="badge badge-secondary">' + place.type + '</span> ' + place.name + '</h5>';
+						contentString += 	'<a class="mb-1" style="text-align:right;" target="_blank" href="' + place.edit + '">수정</a>';
 						contentString += place.imageId ? 
 											'<img class="card-img-top" src="https://drive.google.com/a/toss.im/thumbnail?id=' + place.imageId + '">' : '';
 						contentString += 	'<div class="card-body">';
@@ -155,8 +163,9 @@
 						contentString += place.comment ?		
 												'<h6 class="card-text"><strong>작성자의 한줄평</strong></h6><p class="mb-2">- ' + place.comment + '</p>' : '';
 						contentString += place.link ?
-												'<a class="card-text" href="' + place.link + '"><small>' + place.link + '</small></a>' : '';
-						contentString += 		'<p class="cart-text text-muted mt-1" style="text-align:right;"><small>' + place.writer.split('@')[0] + '님이 ' + place.created + '에 작성</small>&ensp;</p>';
+												'<a class="card-text" target="_blank" href="' + place.link + '"><small>' + place.link + '</small></a>' : '';
+						contentString += place.writer ?
+										 		'<p class="cart-text text-muted mt-1" style="text-align:right;"><small>' + place.writer.split('@')[0] + '님이 ' + place.created + '에 작성</small>&ensp;</p>' : '';
 						contentString += 	'</div>';
 						contentString += '</div>';
 
