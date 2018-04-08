@@ -3,7 +3,7 @@
 <head>
 	<style>
 	#map {
-		height: 65vh;
+		height: 70vh;
 		width: 100vw;
 	}
 	#legend {
@@ -67,7 +67,8 @@
 	<div id="disqus_thread" class="mr-3 ml-3"></div>
 	<script>
 		var disqus_config = function () {
-		this.page.url = "https://alex-toss.github.io/tosshelin-guide#!Home";  // Replace PAGE_URL with your page's canonical URL variable
+		this.page.url = "https://alex-toss.github.io/tosshelin-guide#!Home";  // Replace AGE_URL with your page's canonical URL variable
+		this.page.title = "Home";  
 		this.page.identifier = "Home"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 		};
 		(function() { // DON'T EDIT BELOW THIS LINE
@@ -194,6 +195,7 @@
 							reload: true,
 							config: function () {  
 								this.page.identifier = place.name;  
+								this.page.title = place.name;  
 								this.page.url = 'https://alex-toss.github.io/tosshelin-guide#!' + place.name;
 							}
 						});
