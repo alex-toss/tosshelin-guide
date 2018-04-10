@@ -63,6 +63,7 @@ function initMap() {
 			place.lat 		= entry['gsx$latitude'] ? parseFloat(entry['gsx$latitude']['$t']) : '';
 			place.lng 		= entry['gsx$longitude']? parseFloat(entry['gsx$longitude']['$t']): '';
 
+			place.id = place.id.split('values/')[1];
 			place.imageId = place.image.split('id=').length > 0 ? place.image.split('id=')[1] : '';
 
 			var position = {lat: place.lat, lng: place.lng};
@@ -134,9 +135,9 @@ function initMap() {
 				DISQUS.reset({
 					reload: true,
 					config: function () {  
-						this.page.identifier = place.name;  
+						this.page.identifier = place.id;  
 						this.page.title = place.name;  
-						this.page.url = 'https://alex-toss.github.io/tosshelin-guide#!' + place.name;
+						this.page.url = 'https://alex-toss.github.io/tosshelin-guide#!' + place.id;
 					}
 				});
 			});
